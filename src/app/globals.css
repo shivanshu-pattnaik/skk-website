@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ivory: #fbf7f0;
+  --color-sand: #f3ead9;
+  --color-linen: #e8dac2;
+  --color-ink: #1a1410;
+  --color-ink-soft: #4a3d35;
+  --color-maroon: #7a1f2b;
+  --color-maroon-deep: #4e1018;
+  --color-temple: #a62d2d;
+  --color-gold: #c8a24b;
+  --color-gold-soft: #e6cf9a;
+  --color-indigo: #16233f;
+
+  --font-display: var(--font-marcellus), "Palatino Linotype", Palatino, serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-maroon);
+    color: var(--color-ivory);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .eyebrow {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--color-maroon);
+  }
+
+  .eyebrow-on-dark {
+    color: var(--color-gold-soft);
+  }
+
+  /* Thin gold keyline used to frame portraits and panels. */
+  .keyline {
+    border: 1px solid color-mix(in srgb, var(--color-gold) 55%, transparent);
+  }
+
+  .rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--color-gold) 70%, transparent) 20%,
+      color-mix(in srgb, var(--color-gold) 70%, transparent) 80%,
+      transparent
+    );
+  }
+
+  /* Scroll-reveal: opacity/translate until the observer marks it visible. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition:
+      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Masonry gallery via multi-column flow. */
+  .masonry {
+    column-gap: 1.25rem;
+    column-count: 1;
+  }
+
+  .masonry > * {
+    break-inside: avoid;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .masonry {
+      column-count: 2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .masonry {
+      column-count: 3;
+    }
+  }
+}
